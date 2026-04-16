@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManager.Data;
+using TaskManager.GenricInterface;
+using TaskManager.GenricRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<TaskManagerContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(TasksGenricRepository<>));
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
